@@ -6,14 +6,22 @@ import Image from "next/image"
 import { Product } from "@/types"
 import IconButton from "@/components/ui/icon-button"
 import Currency from "@/components/ui/currency"
+import { useRouter } from "next/navigation"
 
 interface ProductCardProps{
     item:Product
 }
 
 const ProductCard = ({item}:ProductCardProps) => {
+
+    const router = useRouter()
+
+    const handleClick = () => {
+        router.push(`/products/${item?.id}`)
+    }
+
   return (
-    <div className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
+    <div onClick={handleClick} className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
         {/* Images and Actions */}
         <div className="aspect-square rounded-xl bg-gray-100 relative">
             <Image src={item.images?.[0].url} alt='image' fill className="aspect-square object-cover rounded-md"/>
