@@ -15,6 +15,7 @@ interface CategoryPageProps {
   params: {
     categoryId: string;
   };
+  // To access search params in server side
   searchParams: {
     colorId: string;
     sizeId: string;

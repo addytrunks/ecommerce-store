@@ -17,16 +17,19 @@ const Filter = ({data,name,valueKey}:FilterProps) => {
     const searchParams = useSearchParams();
     const router = useRouter()
     
-    const selectedValue = searchParams.get(valueKey)
+    const selectedId = searchParams.get(valueKey)
 
     const onClick = (id:string) => {
-        const current = qs.parse(searchParams.toString())
 
+        const current = qs.parse(searchParams.toString())
+        // {colorId:'243211411',sizeId:'2421412421'}
+    
         const query = {
             ...current,
             [valueKey]:id
         }
         
+        // If the user clicks on the same filter again,set the [valueId] value to null
         if(current[valueKey] == id){
             query[valueKey] = null
         }
@@ -45,7 +48,7 @@ const Filter = ({data,name,valueKey}:FilterProps) => {
         <div className="flex flex-wrap gap-2">
             {data.map((filter) => (
                 <div className="flex items-stretch" key={filter.id}>
-                    <Button onClick={() => onClick(filter.id)} className={cn("rounded-md text-sm text-gray-800 p-2 bg-white border-gray-300",selectedValue === filter.id && "bg-black text-white")}>{filter.name}</Button>
+                    <Button onClick={() => onClick(filter.id)} className={cn("rounded-md text-sm text-gray-800 p-2 bg-white border-gray-300",selectedId === filter.id && "bg-black text-white")}>{filter.name}</Button>
                 </div>
             ))}
         </div>
