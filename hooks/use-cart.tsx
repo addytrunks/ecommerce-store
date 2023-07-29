@@ -6,8 +6,9 @@ import {persist,createJSONStorage} from 'zustand/middleware'
 interface CartStore{
    items:Product[],
    addItem:(data:Product) => void,
-   removeItem?:(id:string) => void,
-   removeAll?:() => void,
+   removeItem:(id:string) => void,
+   removeAll:() => void,
+   getTotal:() => number,
 }
 
 const useCart = create(
@@ -30,6 +31,12 @@ const useCart = create(
         removeAll:() => {
             set({items:[]})
             toast.success("All Products removed from cart.")
+        },
+        getTotal:() => {
+            const totes = get().items.reduce((acc,item) => {
+                return acc+Number(item.price)
+            },0)
+            return totes
         }
     }),{
         name:'cartStorage',
