@@ -7,7 +7,7 @@ interface Query{
     categoryId?:string
     colorId?:string
     sizeId?:string
-    isFeautured:boolean
+    isFeautured?:boolean
 }
 
 const getProducts = async(query:Query):Promise<Product[]> => {
