@@ -11,7 +11,28 @@ import useCart from "@/hooks/use-cart";
 
 const Summary = () => {
 
+    const searchParams = useSearchParams()
     const cart = useCart();
+
+    // After the payment, the user will be redirected to the cart page, and a confirmation message will be displayed
+    useEffect(() => {
+        if(searchParams.get('success')){
+            toast.success('Payment Completed')
+            cart.removeAll();
+        }
+        if(searchParams.get("cancelled")){
+            toast.error("Something went wrong")
+        }
+    },[cart,searchParams])
+
+    const onCheckout = async () => {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`,{
+            productIds:cart.items.map((item) => item.id)
+        });
+
+        // Stripe checkout page URL is passed down the response
+        window.location = res.data.url
+    }
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -24,7 +45,7 @@ const Summary = () => {
                 <Currency value={cart.getTotal()}/>
             </div>
         </div>
-        <Button className="w-full mt-6">Checkout</Button>
+        <Button onClick={onCheckout} className="w-full mt-6">Checkout</Button>
     </div>
   )
 }
