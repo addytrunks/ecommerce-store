@@ -4,10 +4,22 @@ import Container from "@/components/ui/container"
 import useCart from "@/hooks/use-cart"
 import CartItem from "./components/cart-item"
 import Summary from "./components/summary"
+import { useEffect, useState } from "react"
 
 const CartPage = () => {
 
     const cart = useCart();
+    const [isMounted,setIsMounted] = useState(false)
+
+    // Prevention from hydration error(when the client and the server are not in sync)
+    useEffect(() => {
+        setIsMounted(true)
+    },[])
+
+    if(!isMounted){
+        return null;
+    }
+    
   return (
     <div className="bg-white">
         <Container>
@@ -22,7 +34,7 @@ const CartPage = () => {
                             ))}
                         </ul>
                     </div>
-                    <Summary/>
+                    {cart?.items.length > 0 && <Summary/>}
                 </div>
             </div>
         </Container>
