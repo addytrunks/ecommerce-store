@@ -27,7 +27,7 @@ const Summary = () => {
 
     const onCheckout = async () => {
         const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`,{
-            productIds:cart.items.map((item) => item.id)
+            productIds:cart.items.map((item) => item.product.id)
         });
 
         // Stripe checkout page URL is passed down the response
