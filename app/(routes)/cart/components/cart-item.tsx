@@ -1,9 +1,7 @@
 "use client"
 
 import { Minus, Plus, X } from "lucide-react"
-import Link from "next/link"
 
-import Currency from "@/components/ui/currency"
 import IconButton from "@/components/ui/icon-button"
 import useCart from "@/hooks/use-cart"
 import { Product } from "@/types"
