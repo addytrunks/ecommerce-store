@@ -47,10 +47,11 @@ const useCart = create(
         removeItem:(id:string) => {
             const quantity = get().getProductQuantity(id)
             const data:Product|undefined = get().items.find((item) => item.product.id === id)?.product
+            const items = get().items
             // If quantity is not 1, decrease quantity
             if(quantity!==1){
-                const updatedItem = { quantity: get().getProductQuantity(data?.id!) - 1, product: data };
-                const updatedItems = [...get().items.filter(item => item.product.id !== data?.id), updatedItem];
+                const updatedItem = { quantity: get().getProductQuantity(data.id) - 1, product: data };
+                const updatedItems = items.map(item => (item.product.id !== data.id ? item : updatedItem));
                 // @ts-ignore
                 set({items:updatedItems})
             }else if(quantity == 1){
