@@ -29,7 +29,7 @@ const CartPage = () => {
                     <div className="lg:col-span-7">
                         {!cart?.items.length && <p className="text-neutral-500">No items added to cart</p>}
                         <ul>
-                            {cart.items.map((item) => (
+                            {cart?.items.map((item) => (
                                 <CartItem key={item.product.id} item={item}/>
                             ))}
                         </ul>
